@@ -1,0 +1,6 @@
+C:\Users\fgghy\source\repos\WebApplication1\WebMarket.Helpers\bin\Debug\WebMarket.Helpers.dll
+C:\Users\fgghy\source\repos\WebApplication1\WebMarket.Helpers\bin\Debug\WebMarket.Helpers.pdb
+C:\Users\fgghy\source\repos\WebApplication1\WebMarket.Helpers\obj\Debug\WebMarket.Helpers.csproj.AssemblyReference.cache
+C:\Users\fgghy\source\repos\WebApplication1\WebMarket.Helpers\obj\Debug\WebMarket.Helpers.csproj.CoreCompileInputs.cache
+C:\Users\fgghy\source\repos\WebApplication1\WebMarket.Helpers\obj\Debug\WebMarket.Helpers.dll
+C:\Users\fgghy\source\repos\WebApplication1\WebMarket.Helpers\obj\Debug\WebMarket.Helpers.pdb

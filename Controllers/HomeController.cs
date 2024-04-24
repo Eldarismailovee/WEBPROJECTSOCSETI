@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using WebApplication1.Models;
 
 namespace WebApplication1.App_Start
@@ -22,5 +23,19 @@ namespace WebApplication1.App_Start
         {
             return View();
         }
+        public ActionResult Product()
+        {
+            var product = Request.QueryString["product"];
+            UserData user = new UserData();
+            user.Username = "Customer";
+            user.SIngleProduct = product;
+            return View(user);
+        }
+        [HttpPost]
+        public ActionResult Product(string btn)
+        {
+            return RedirectToAction("Product", "Home", new {@p=btn});
+        }
+    
     }
 }

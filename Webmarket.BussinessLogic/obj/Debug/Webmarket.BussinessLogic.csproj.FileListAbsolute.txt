@@ -1,0 +1,14 @@
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\bin\Debug\Webmarket.BussinessLogic.dll
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\bin\Debug\Webmarket.BussinessLogic.pdb
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\bin\Debug\WebMarket.Domain.dll
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\bin\Debug\WebMarket.Helpers.dll
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\bin\Debug\EntityFramework.dll
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\bin\Debug\WebMarket.Domain.pdb
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\bin\Debug\WebMarket.Domain.dll.config
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\bin\Debug\WebMarket.Helpers.pdb
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\bin\Debug\EntityFramework.xml
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\obj\Debug\Webmarket.BussinessLogic.csproj.AssemblyReference.cache
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\obj\Debug\Webmarket.BussinessLogic.csproj.CoreCompileInputs.cache
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\obj\Debug\Webmarke.B2926AE1.Up2Date
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\obj\Debug\Webmarket.BussinessLogic.dll
+C:\Users\fgghy\source\repos\WebApplication1\Webmarket.BussinessLogic\obj\Debug\Webmarket.BussinessLogic.pdb

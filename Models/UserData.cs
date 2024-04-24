@@ -9,5 +9,6 @@ namespace WebApplication1.Models
     {
         public string Username { get; set; }
         public List<string> Products { get; set; }
+        public string SIngleProduct { get; set; }
     }
 }
