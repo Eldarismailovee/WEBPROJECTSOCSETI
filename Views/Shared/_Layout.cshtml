@@ -1,0 +1,28 @@
+﻿@using System.Web.Optimization;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    @Styles.Render("~/bundles/bootstrapmin/css")
+    @Styles.Render("~/bundles/material-icons/css")
+    @Styles.Render("~/bundles/pe-icons/css")
+    @Styles.Render("~/bundles/custom/css")
+</head>
+<body>
+    @Html.Partial("_Header")
+
+    @RenderBody()
+
+    @Html.Partial("_Footer")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery-easing")
+    @Scripts.Render("~/bundles/custom-app")
+    @Scripts.Render("~/bundles/counter-init")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
