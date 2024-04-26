@@ -33,10 +33,10 @@
             <div class="col-lg-2">
                 <h5 class="footer-title text-white mb-3">О нас</h5>
                 <ul class="list-unstyled footer-list">
-                    <li><a href="">Домой</a></li>
+                    <li><a href="@Url.Action("Index", "Home")">Домой</a></li>
                     <li><a href="">Контакты</a></li>
-                    <li><a href="">О нас</a></li>
-                    <li><a href="">FAQ</a></li>
+                    <li><a href="@Url.Action("AboutUs", "TermsAndRules")">О нас</a></li>
+                    <li><a href="@Url.Action("FAQ", "TermsAndRules")">FAQ</a></li>
                 </ul>
             </div>
             <div class="col-lg-2">
@@ -51,8 +51,8 @@
                 <h5 class="footer-title text-white mb-3">Поддерка</h5>
                 <ul class="list-unstyled footer-list">
                     <li><a href="">Служба поддержкиt</a></li>
-                    <li><a href="">Политика конфиденциальности</a></li>
-                    <li><a href="">Правила пользования</a></li>
+                    <li><a href="@Url.Action("Confidencial", "TermsAndRules")">Политика конфиденциальности</a></li>
+                    <li><a href="@Url.Action("Rules", "TermsAndRules")">Правила пользования</a></li>
                 </ul>
             </div>
             <div class="col-lg-3">

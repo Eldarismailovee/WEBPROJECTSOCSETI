@@ -8,13 +8,16 @@ namespace WebApplication1.Models
 {
     public class UserLogin
     {
-        [Required]
-        [Display(Name = "User Name or Email")]
-        public string Credential { get; internal set; }
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Электронная почта")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Обязательно введите Email")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
 
-        public string Password { get; internal set; }
+        [Display(Name = "Пароль")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Обязательно введите пароль")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+        [Display(Name = "Запомнить меня")]
+        public bool RememberMe { get; set; }
     }
 }
