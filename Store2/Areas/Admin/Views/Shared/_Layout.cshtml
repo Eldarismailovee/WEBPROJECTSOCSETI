@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="ru" style="height: 100%;">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Супермаркет - Ваш онлайн магазин</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .wrapper {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex: 1;
+        }
+
+        .navbar-brand {
+            font-size: 1.5em;
+            color: #fff;
+        }
+
+        .bg-green {
+            background-color: #4CAF50;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+            .search-bar input[type="search"] {
+                border-radius: 20px;
+                padding-right: 40px;
+            }
+
+            .search-bar .fa-search {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #aaa;
+            }
+
+        .contact-info {
+            color: #fff;
+            text-align: right;
+        }
+
+            .contact-info p {
+                margin-bottom: 0;
+            }
+
+        .footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <header class="bg-green py-2">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <a class="navbar-brand" href="#">Супермаркет</a>
+                    </div>
+                    <div class="col-md-5 d-flex justify-content-center">
+                        <div class="search-bar">
+                            <input type="search" class="form-control" placeholder="Поиск">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end">
+                            <div class="nav-item dropdown">
+                                @if (Request.IsAuthenticated)
+                                {
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownAccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        @User.Identity.Name
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownAccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Мой аккаунт
+                                    </a>
+                                }
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
+                                    <a class="dropdown-item" href="#">Профиль</a>
+                                    <a class="dropdown-item" href="#">Настройки</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Выйти</a>
+                                </div>
+                            </div>
+                            <a class="nav-link text-white" href="#">Избранное</a>
+                            <a class="nav-link text-white" href="#">
+                                Корзина <span class="badge badge-pill badge-light">0</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main role="main" class="container content">
+            <!-- Основное содержимое страницы -->
+            @RenderBody()
+        </main>
+        <footer class="footer mt-auto py-3 bg-dark">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5>Подписывайтесь на нас</h5>
+                        <p>Подписывайтесь на наши социальные сети и узнавайте первыми о лучших предложениях!</p>
+                        <!-- Иконки социальных сетей -->
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Linella</h5>
+                        <ul style="list-style-type: none; padding: 0;">
+                            <li><a href="#" class="text-white">Местные Товары</a></li>
+                            <li><a href="#" class="text-white">О нас</a></li>
+                            <li><a href="#" class="text-white">Новости</a></li>
+                            <!-- Другие ссылки -->
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Страницы</h5>
+                        <ul style="list-style-type: none; padding: 0;">
+                            <li><a href="#" class="text-white">Вакансии</a></li>
+                            <li><a href="#" class="text-white">Политика конфиденциальности</a></li>
+                            <li><a href="#" class="text-white">Условия и положения</a></li>
+                            <!-- Другие ссылки -->
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Контакты</h5>
+                        <p><a href="tel:+37322890930" class="text-white">+373 (22) 89-09-30</a></p>
+                        <p>Кишинёв, ул. Студентилор 7/1</p>
+                        <p><a href="mailto:relatiiclienti@linella.md" class="text-white">relatiiclienti@linella.md</a></p>
+                        <p><a href="tel:+37322890927" class="text-white">+373 68 82 68 28</a></p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Скрипты -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

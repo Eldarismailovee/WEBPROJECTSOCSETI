@@ -1,0 +1,29 @@
+﻿@model Store2.Domain.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="@Model.ImageUrl" class="card-img" alt="@Model.Name">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h2 class="card-title">@Model.Name</h2>
+                    <p class="card-text"><strong>Price:</strong> @Model.Price.ToString("C")</p>
+                    <p class="card-text"><strong>Description:</strong> @Model.Description</p>
+                    <p class="card-text"><strong>Quantity:</strong> @Model.Quantity</p>
+                    <p class="card-text"><strong>Brand:</strong> @Model.Brand</p>
+                    <p class="card-text"><strong>Availability:</strong> @(Model.IsAvailable ? "In Stock" : "Out of Stock")</p>
+                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-right mt-3">
+        @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-secondary" })
+    </div>
+</div>

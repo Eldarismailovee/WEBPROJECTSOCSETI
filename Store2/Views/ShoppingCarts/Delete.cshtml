@@ -1,0 +1,17 @@
+﻿@model Store2.Domain.ShoppingCart
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3>Вы действительно хотите удалить?</h3>
+<div>
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Назад", "Index")
+        </div>
+    }
+</div>

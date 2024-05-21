@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Store2.Domain.BlogList>
+
+@{
+    ViewBag.Title = "Breakfast";
+}
+
+<h2>Breakfast Menu</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.Where(i => i.Category.Name == "Завтрак"))
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <img src="@Url.Content(item.ImageUrl)" class="card-img-top" alt="@item.Title" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">@item.Content</p>
+                        <p class="card-text"><small class="text-muted">@item.Date.ToString("dd MMM yyyy")</small></p>
+                        <!-- Дополнительные детали -->
+                        <a href="@Url.Action("Details", "BlogLists", new { id = item.Id })" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

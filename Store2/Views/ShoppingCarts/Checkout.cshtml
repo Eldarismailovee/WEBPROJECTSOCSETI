@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Store2.Domain.ShoppingCart>
+
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<h2>Checkout</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Checkout" method="post" class="needs-validation" novalidate>
+            <div class="form-group">
+                <label for="FullName">Полное имя</label>
+                <input type="text" class="form-control" id="FullName" placeholder="Введите ваше полное имя" required>
+                <div class="invalid-feedback">
+                    Пожалуйста, введите ваше полное имя.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <input type="email" class="form-control" id="Email" placeholder="Введите ваш email" required>
+                <div class="invalid-feedback">
+                    Пожалуйста, введите корректный email.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Address">Адрес</label>
+                <input type="text" class="form-control" id="Address" placeholder="1234 Main St" required>
+                <div class="invalid-feedback">
+                    Пожалуйста, введите ваш адрес.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="City">Город</label>
+                <input type="text" class="form-control" id="City" placeholder="Москва" required>
+                <div class="invalid-feedback">
+                    Пожалуйста, введите название города.
+                </div>
+            </div>
+            <!-- Добавьте дополнительные поля по необходимости -->
+            <button class="btn btn-primary" type="submit">Оформить заказ</button>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Ваша корзина</span>
+            <span class="badge badge-secondary badge-pill">3</span>
+        </h4>
+        <ul class="list-group mb-3">
+            <!-- Здесь будет список товаров в корзине -->
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">Название товара</h6>
+                    <small class="text-muted">Краткое описание</small>
+                </div>
+                <span class="text-muted">₽500</span>
+            </li>
+            <!-- Добавьте дополнительные товары -->
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Итого (RUB)</span>
+                <strong>₽1500</strong>
+            </li>
+        </ul>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Пример JavaScript для отключения отправки формы, если есть невалидные поля
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>

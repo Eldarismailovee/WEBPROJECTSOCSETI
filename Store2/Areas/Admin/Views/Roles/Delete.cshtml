@@ -1,0 +1,14 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+
+@using (Html.BeginForm("Delete", "Roles", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, "Role Name")
+        @Html.DropDownList("RoleName", null, "Select Role", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Name)
+    </div>
+
+    <button type="submit" class="btn btn-danger">Delete Role</button>
+}

@@ -1,0 +1,54 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 Error - Internal Server Error</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .error-container {
+            text-align: center;
+            padding: 40px 15px;
+        }
+
+            .error-container h1 {
+                font-size: 120px;
+                line-height: 120px;
+            }
+
+            .error-container p {
+                font-size: 20px;
+            }
+
+        .btn-go-home {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="error-container">
+                    <h1 class="display-1">500</h1>
+                    <p class="lead">Internal Server Error.</p>
+                    <p>Произошла внутренняя ошибка сервера. Мы работаем над её устранением.</p>
+                    <a href="/" class="btn btn-primary btn-go-home">Вернуться на главную</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

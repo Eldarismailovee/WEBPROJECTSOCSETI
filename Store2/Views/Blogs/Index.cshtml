@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Store2.Domain.BlogCategory>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <!-- Используем условные операторы для определения URL в зависимости от категории -->
+                    <a href="@Url.Action(item.Name == "Завтрак" ? "Zavtrak" : item.Name == "Обед" ? "Obed" : item.Name == "Ужин" ? "Uzhin" : "Details", "Blogs", new { id = item.Id })" style="text-decoration: none; color: inherit;">
+                        <img src="@Url.Content(item.ImageUrl)" class="card-img-top" alt="@item.Name" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+                            <p class="card-text">@item.Description</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

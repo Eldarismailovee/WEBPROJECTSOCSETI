@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Список Ролей</h2>
+
+<p>
+    @Html.ActionLink("Создать Новую Роль", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Управление Ролями Пользователя", "ManageUserRoles", null, new { @class = "btn btn-info" })
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название Роли</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td><strong>@role.Name</strong></td>
+                <td>
+                    @Html.ActionLink("Редактировать", "Edit", new { roleName = @role.Name }, new { @class = "btn btn-default" })
+                    <a href="javascript:;" class="btn btn-danger" onclick="deleteRole('@role.Name');">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script type="text/javascript">
+        function deleteRole(roleName) {
+            if (confirm('Вы уверены, что хотите удалить роль "' + roleName + '"?')) {
+                $.post('/Roles/Delete', { RoleName: roleName }, function (data) {
+                    window.location.href = '/Roles/Index';
+                }).fail(function () {
+                    alert('Успнешно.');
+                });
+            }
+        }
+    </script>
+}

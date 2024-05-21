@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Store2.Domain.ShoppingCart>
+
+@{
+    ViewBag.Title = "Корзина";
+}
+
+<h2>Корзина</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Product.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Quantity)</th>
+            <th>Стоимость</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@Url.Content(item.Product.ImageUrl)" alt="Изображение" class="img-thumbnail" style="width:100px; height:auto;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @item.Product.Price MDL x @item.Quantity = @(item.Product.Price * item.Quantity) MDL
+                </td>
+                <td>
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+            <div class="text-center mt-4">
+                <a href="@Url.Action("Checkout", "ShoppingCarts")" class="btn btn-success">Оплатить</a>
+            </div>
+        }
+    </tbody>
+</table>
