@@ -17,7 +17,7 @@ namespace Store2.Domain
         public string ImageUrl { get; set; }
         public string Brand { get; set; }
         public bool IsAvailable { get; set; }
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public Category Category { get; set; }
     }
   }

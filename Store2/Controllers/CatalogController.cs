@@ -17,12 +17,44 @@ namespace Store2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Catalog
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? categoryId, string sortOrder)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
+            ViewBag.CurrentCategory = categoryId;
+
             var products = db.Products.Include(p => p.Category);
+            string categoryName = "Все продукты"; // Значение по умолчанию
+
+            if (categoryId.HasValue)
+            {
+                var category = await db.Categories.FindAsync(categoryId.Value);
+                if (category != null)
+                {
+                    categoryName = category.Name;
+                    products = products.Where(p => p.CategoryId == categoryId.Value);
+                }
+            }
+
+            ViewBag.CategoryName = categoryName;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    products = products.OrderByDescending(p => p.Name);
+                    break;
+                case "Price":
+                    products = products.OrderBy(p => p.Price);
+                    break;
+                case "price_desc":
+                    products = products.OrderByDescending(p => p.Price);
+                    break;
+                default:
+                    products = products.OrderBy(p => p.Name);
+                    break;
+            }
             return View(await products.ToListAsync());
         }
-
         // GET: Catalog/Details/5
         public async Task<ActionResult> Details(int? id)
         {

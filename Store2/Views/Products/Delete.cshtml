@@ -4,85 +4,47 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Админ панель</a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Products")">Продукты</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Удаление продукта</li>
+    </ol>
+</nav>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+<div class="container mt-5">
+    <h2>Удаление продукта</h2>
+    <h3>Вы действительно хотите удалить данный продукт?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>Название</dt>
+            <dd>@Html.DisplayFor(model => model.Name)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dt>Цена</dt>
+            <dd>@Html.DisplayFor(model => model.Price)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+            <dt>Описание</dt>
+            <dd>@Html.DisplayFor(model => model.Description)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+            <dt>Количество</dt>
+            <dd>@Html.DisplayFor(model => model.Quantity)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dt>Изображение</dt>
+            <dd><img src="@Url.Content(Model.ImageUrl)" alt="Изображение продукта" class="img-thumbnail" /></dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dt>Категория</dt>
+            <dd>@Html.DisplayFor(model => model.Category.Name)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
+            <dt>Бренд</dt>
+            <dd>@Html.DisplayFor(model => model.Brand)</dd>
+        </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Brand)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Brand)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsAvailable)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsAvailable)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input type="submit" value="Удалить" class="btn btn-danger" />
+            @Html.ActionLink("Вернуться к списку", "Index", null, new { @class = "btn btn-secondary" })
+        }
+    </div>
 </div>

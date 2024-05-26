@@ -1,0 +1,16 @@
+﻿namespace Store2.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class category : DbMigration
+    {
+        public override void Up()
+        {
+        }
+        
+        public override void Down()
+        {
+        }
+    }
+}

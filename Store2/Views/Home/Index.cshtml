@@ -5,22 +5,8 @@
 
 <div class="container mt-4">
     <div class="row align-items-start">
-        <!-- Секция свойств -->
-        <div class="col-md-4">
-            @foreach (var property in Model.PropertyStoreModels.Take(10))
-            {
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">@property.Name</h5>
-                        <p class="card-text">@property.value</p>
-                        <img src="@property.imageUrl" alt="Property Image" class="img-fluid">
-                    </div>
-                </div>
-            }
-        </div>
-
         <!-- Секция слайдов -->
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
@@ -51,9 +37,32 @@
         </div>
     </div>
 
-    <h2 class="mb-3">Продукты</h2>
+    <div class="col-md-12">
+        <h2 class="text-center my-4">Категории продуктов</h2>
+        <hr class="my-4" style="border-top: 1px solid #ccc;">
+        <div class="row">
+            @foreach (var category in Model.Categories)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <a href="@Url.Action("Index", "Catalog", new { categoryId = category.Id })">
+                            <img src="@category.Description" class="card-img-top" alt="@category.Name">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">@category.Name</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+
+    <h2 class="text-center my-4">Недавно добавленные</h2>
+    <hr class="my-4" style="border-top: 1px solid #ccc;">
     <div class="row">
-        @foreach (var product in Model.Products)
+        @foreach (var product in Model.Products.Take(4))
         {
             <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
                 <div class="card h-100">
@@ -71,9 +80,14 @@
             </div>
         }
     </div>
-</div>
 
-@section Scripts {
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
-}
+    <h2 class="text-center my-4">Акции</h2>
+    <hr class="my-4" style="border-top: 1px solid #ccc;">
+    <div class="row"></div>
+
+    </div>
+
+    @section Scripts {
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    }

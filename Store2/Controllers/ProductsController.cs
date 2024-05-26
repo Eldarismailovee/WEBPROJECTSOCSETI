@@ -17,10 +17,10 @@ namespace Store2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Products
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var products = db.Products.Include(p => p.Category);
-            return View(await products.ToListAsync());
+            var products = db.Products.Include(p => p.Category).ToList();
+            return View(products);
         }
 
         // GET: Products/Details/5
@@ -41,6 +41,7 @@ namespace Store2.Controllers
         // GET: Products/Create
         public ActionResult Create()
         {
+
             ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
             return View();
         }
@@ -74,7 +75,7 @@ namespace Store2.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", product.CategoryId);
+            ViewBag.Categories = db.Categories.ToList();
             return View(product);
         }
 

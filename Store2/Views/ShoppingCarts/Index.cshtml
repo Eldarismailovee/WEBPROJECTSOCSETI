@@ -15,10 +15,13 @@
             <th>Стоимость</th>
             <th>Действие</th>
         </tr>
+
     </thead>
     <tbody>
+
         @foreach (var item in Model)
         {
+
             <tr>
                 <td>
                     <img src="@Url.Content(item.Product.ImageUrl)" alt="Изображение" class="img-thumbnail" style="width:100px; height:auto;" />
@@ -35,10 +38,12 @@
                 <td>
                     @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
                 </td>
+
             </tr>
-            <div class="text-center mt-4">
-                <a href="@Url.Action("Checkout", "ShoppingCarts")" class="btn btn-success">Оплатить</a>
-            </div>
+
         }
     </tbody>
+    <div class="text-center mt-4">
+        <a href="@Url.Action("Checkout", "ShoppingCarts")" class="btn btn-success">Оплатить</a>
+    </div>
 </table>

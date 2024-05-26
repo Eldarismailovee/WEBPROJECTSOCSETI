@@ -42,7 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Discount.cs" />
     <Compile Include="AdminLogin.cs" />
+    <Compile Include="Adminpanel.cs" />
     <Compile Include="BlogCategory.cs" />
     <Compile Include="BlogList.cs" />
     <Compile Include="Category.cs" />

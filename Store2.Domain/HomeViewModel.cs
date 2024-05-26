@@ -16,5 +16,7 @@ namespace Store2.Domain
         public IEnumerable<Slides> Slides { get; set; }
         public IEnumerable<PropertyStoreModel> PropertyStoreModels { get; set; }
         public IEnumerable<Product> Products { get; set; }
+
+        public IEnumerable<Category> Categories { get; set; }
     }
 }

@@ -194,6 +194,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminLoginsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminPanelController.cs" />
     <Compile Include="Areas\Admin\Controllers\RolesController.cs" />
     <Compile Include="Areas\Admin\Controllers\SlidesController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -218,9 +219,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202405172203223_k.cs" />
-    <Compile Include="Migrations\202405172203223_k.Designer.cs">
-      <DependentUpon>202405172203223_k.cs</DependentUpon>
+    <Compile Include="Migrations\202405252053044_hy.cs" />
+    <Compile Include="Migrations\202405252053044_hy.Designer.cs">
+      <DependentUpon>202405252053044_hy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405252154081_category.cs" />
+    <Compile Include="Migrations\202405252154081_category.Designer.cs">
+      <DependentUpon>202405252154081_category.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -285,6 +290,7 @@
     <Content Include="Areas\Admin\Views\Slides\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Slides\Index.cshtml" />
     <Content Include="Content\style.css.map" />
+    <Content Include="Areas\Admin\Views\AdminPanel\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\counter.init.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -412,8 +418,6 @@
     <Content Include="Views\FooterSocials\Details.cshtml" />
     <Content Include="Views\FooterSocials\Edit.cshtml" />
     <Content Include="Views\FooterSocials\Index.cshtml" />
-    <Content Include="Views\Catalog\Fruits.cshtml" />
-    <Content Include="Views\Catalog\Vegetables.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -455,11 +459,13 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\UserRoles\" />
     <Folder Include="Views\Blog\" />
-    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202405172203223_k.resx">
-      <DependentUpon>202405172203223_k.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202405252053044_hy.resx">
+      <DependentUpon>202405252053044_hy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405252154081_category.resx">
+      <DependentUpon>202405252154081_category.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
