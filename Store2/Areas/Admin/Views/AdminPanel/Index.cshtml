@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Админ-панель";
+}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Главная</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "AdminPanel", new { area = "Admin" })">Админ-Панель</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Главная</li>
+        </ol>
+    </nav>
+    <h2 class="text-center my-4">Добро пожаловать в админ-панель</h2>
+    <p class="text-center">Здесь вы можете управлять продуктами, пользователями и другими аспектами сайта.</p>
+    <hr class="my-4" style="border-top: 1px solid #ccc;">
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-boxes fa-3x mb-3"></i>
+                    <h5 class="card-title">Управление продуктами</h5>
+                    <p class="card-text">Добавление, редактирование и удаление продуктов.</p>
+                    <a href="@Url.Action("Index", "Products", new { area = "Admin" })" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-users fa-3x mb-3"></i>
+                    <h5 class="card-title">Управление пользователями</h5>
+                    <p class="card-text">Просмотр и управление пользователями сайта.</p>
+                    <a href="@Url.Action("ManageUsers", "AdminPanel", new { area = "Admin" })" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+                    <h5 class="card-title">Управление заказами</h5>
+                    <p class="card-text">Обзор и обработка заказов клиентов.</p>
+                    <a href="@Url.Action("ManageOrders", "AdminPanel", new { area = "Admin" })" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-tags fa-3x mb-3"></i>
+                    <h5 class="card-title">Управление категориями</h5>
+                    <p class="card-text">Создание и редактирование категорий продуктов.</p>
+                    <a href="@Url.Action("ManageCategories", "AdminPanel", new { area = "Admin" })" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-comments fa-3x mb-3"></i>
+                    <h5 class="card-title">Управление отзывами</h5>
+                    <p class="card-text">Модерация и управление отзывами пользователей.</p>
+                    <a href="@Url.Action("ManageReviews", "AdminPanel", new { area = "Admin" })" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-bullhorn fa-3x mb-3"></i>
+                    <h5 class="card-title">Управление акциями</h5>
+                    <p class="card-text">Создание и редактирование промо-акций.</p>
+                    <a href="@Url.Action("ManagePromotions", "AdminPanel", new { area = "Admin" })" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <i class="fas fa-cogs fa-3x mb-3"></i>
+                    <h5 class="card-title">Настройки сайта</h5>
+                    <p class="card-text">Настройка общих параметров сайта.</p>
+                    <a href="@Url.Action("SiteSettings", "AdminPanel", new { area = "Admin" })" class="btn btn-primary">Перейти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

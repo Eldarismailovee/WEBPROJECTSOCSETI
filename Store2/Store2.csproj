@@ -193,7 +193,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\AdminLoginsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminPanelController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DeliveryMethodsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PropertyStoreModelsController.cs" />
     <Compile Include="Areas\Admin\Controllers\RolesController.cs" />
     <Compile Include="Areas\Admin\Controllers\SlidesController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -201,29 +205,41 @@
     <Compile Include="Controllers\BlogListsController.cs" />
     <Compile Include="Controllers\BlogsController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
-    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\DifficultBlogsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FavoritesController.cs" />
     <Compile Include="Controllers\Footer\FooterContactsController.cs" />
     <Compile Include="Controllers\Footer\FooterMarketsController.cs" />
     <Compile Include="Controllers\Footer\FooterPagesController.cs" />
     <Compile Include="Controllers\Footer\FooterSocialsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KeepAliveController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentMethodCategoriesController.cs" />
     <Compile Include="Controllers\PaymentMethodsController.cs" />
-    <Compile Include="Controllers\ProductsController.cs" />
-    <Compile Include="Controllers\PropertyStoreModelsController.cs" />
     <Compile Include="Controllers\ShoppingCartsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202405172203223_k.cs" />
-    <Compile Include="Migrations\202405172203223_k.Designer.cs">
-      <DependentUpon>202405172203223_k.cs</DependentUpon>
+    <Compile Include="Migrations\202405252053044_hy.cs" />
+    <Compile Include="Migrations\202405252053044_hy.Designer.cs">
+      <DependentUpon>202405252053044_hy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202405252154081_category.cs" />
+    <Compile Include="Migrations\202405252154081_category.Designer.cs">
+      <DependentUpon>202405252154081_category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406011510593_Favorite.cs" />
+    <Compile Include="Migrations\202406011510593_Favorite.Designer.cs">
+      <DependentUpon>202406011510593_Favorite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202406020028317_AddDeliveryMethod.cs" />
+    <Compile Include="Migrations\202406020028317_AddDeliveryMethod.Designer.cs">
+      <DependentUpon>202406020028317_AddDeliveryMethod.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CheckOutViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -285,6 +301,19 @@
     <Content Include="Areas\Admin\Views\Slides\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Slides\Index.cshtml" />
     <Content Include="Content\style.css.map" />
+    <Content Include="Areas\Admin\Views\AdminPanel\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPanel\ManageProducts.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminPanel\ManageCategories.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Products\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DeliveryMethods\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DeliveryMethods\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\DeliveryMethods\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\DeliveryMethods\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DeliveryMethods\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\counter.init.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -335,11 +364,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\ShowConfirmationPage.cshtml" />
-    <Content Include="Views\Products\Create.cshtml" />
-    <Content Include="Views\Products\Delete.cshtml" />
-    <Content Include="Views\Products\Details.cshtml" />
-    <Content Include="Views\Products\Edit.cshtml" />
-    <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\ShoppingCarts\Create.cshtml" />
     <Content Include="Views\ShoppingCarts\Delete.cshtml" />
     <Content Include="Views\ShoppingCarts\Details.cshtml" />
@@ -347,11 +371,6 @@
     <Content Include="Views\ShoppingCarts\Index.cshtml" />
     <Content Include="Views\Catalog\Details.cshtml" />
     <Content Include="Views\Catalog\Index.cshtml" />
-    <Content Include="Views\Categories\Create.cshtml" />
-    <Content Include="Views\Categories\Delete.cshtml" />
-    <Content Include="Views\Categories\Details.cshtml" />
-    <Content Include="Views\Categories\Edit.cshtml" />
-    <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\BlogLists\Create.cshtml" />
     <Content Include="Views\BlogLists\Delete.cshtml" />
     <Content Include="Views\BlogLists\Details.cshtml" />
@@ -387,11 +406,6 @@
     <Content Include="Views\PaymentMethods\Details.cshtml" />
     <Content Include="Views\PaymentMethods\Edit.cshtml" />
     <Content Include="Views\PaymentMethods\Index.cshtml" />
-    <Content Include="Views\PropertyStoreModels\Create.cshtml" />
-    <Content Include="Views\PropertyStoreModels\Delete.cshtml" />
-    <Content Include="Views\PropertyStoreModels\Details.cshtml" />
-    <Content Include="Views\PropertyStoreModels\Edit.cshtml" />
-    <Content Include="Views\PropertyStoreModels\Index.cshtml" />
     <Content Include="Views\FooterContacts\Create.cshtml" />
     <Content Include="Views\FooterContacts\Delete.cshtml" />
     <Content Include="Views\FooterContacts\Details.cshtml" />
@@ -412,8 +426,10 @@
     <Content Include="Views\FooterSocials\Details.cshtml" />
     <Content Include="Views\FooterSocials\Edit.cshtml" />
     <Content Include="Views\FooterSocials\Index.cshtml" />
-    <Content Include="Views\Catalog\Fruits.cshtml" />
-    <Content Include="Views\Catalog\Vegetables.cshtml" />
+    <Content Include="Views\Account\EditProfile.cshtml" />
+    <Content Include="Views\Favorites\Index.cshtml" />
+    <Content Include="Views\Favorites\Details.cshtml" />
+    <Content Include="Views\Catalog\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -455,11 +471,20 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\UserRoles\" />
     <Folder Include="Views\Blog\" />
-    <Folder Include="Views\Error\" />
+    <Folder Include="Views\KeepAlive\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202405172203223_k.resx">
-      <DependentUpon>202405172203223_k.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202405252053044_hy.resx">
+      <DependentUpon>202405252053044_hy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405252154081_category.resx">
+      <DependentUpon>202405252154081_category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406011510593_Favorite.resx">
+      <DependentUpon>202406011510593_Favorite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202406020028317_AddDeliveryMethod.resx">
+      <DependentUpon>202406020028317_AddDeliveryMethod.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

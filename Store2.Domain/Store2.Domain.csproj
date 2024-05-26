@@ -42,13 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeliveryMethods.cs" />
+    <Compile Include="Discount.cs" />
     <Compile Include="AdminLogin.cs" />
+    <Compile Include="Adminpanel.cs" />
     <Compile Include="BlogCategory.cs" />
     <Compile Include="BlogList.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="CheckOutViewModel.cs" />
     <Compile Include="DateOrder.cs" />
     <Compile Include="DifficultBlog.cs" />
+    <Compile Include="Favorite.cs" />
     <Compile Include="FooterContact.cs" />
     <Compile Include="FooterMarket.cs" />
     <Compile Include="FooterPages.cs" />
@@ -71,5 +75,6 @@
       <Name>Store2.Bussines_logic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

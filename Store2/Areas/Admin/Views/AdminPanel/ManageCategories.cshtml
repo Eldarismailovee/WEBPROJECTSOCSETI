@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Управление категориями";
+}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home", new { area = "" })">Главная</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "AdminPanel", new { area = "Admin" })">Админ-Панель</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "ManageProducts", new { area = "Admin" })">Управление продуктами</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Управление категориями</li>
+        </ol>
+    </nav>
+    <h2 class="text-center my-4">Управление категориями</h2>
+    <!-- Добавьте форму для управления категориями -->
+</div>

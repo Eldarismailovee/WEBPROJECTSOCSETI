@@ -116,4 +116,21 @@ namespace Store2.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+    public class EditProfileViewModel
+    {
+        [Required]
+        [Display(Name = "Имя")]
+        public string CustomerName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Электронная почта")]
+        public string Email { get; set; }
+
+        [Required]
+        [Phone]
+        [Display(Name = "Телефон")]
+        public string Phone { get; set; }
+    }
+
 }

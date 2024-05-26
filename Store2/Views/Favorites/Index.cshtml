@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Store2.Domain.Favorite>
+
+@{
+    ViewBag.Title = "Избранное";
+}
+<style>
+    .empty-favorites {
+        font-weight: bold; /* Жирный текст */
+    }
+
+    .favorite-icon {
+        cursor: pointer;
+        font-size: 1.5em;
+        transition: color 0.3s;
+    }
+
+        .favorite-icon .fa-heart {
+            color: #ddd;
+        }
+
+            .favorite-icon .fa-heart.text-danger {
+                color: red;
+            }
+</style>
+<div class="container mt-4">
+    <h2 class="text-center my-4">Избранные товары</h2>
+    <hr class="my-4" style="border-top: 1px solid #ccc;">
+    <div class="row">
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center empty-favorites">
+                <p>У вас нет товаров в списке избранного.</p>
+            </div>
+        }
+        else
+        {
+            foreach (var favorite in Model)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100 shadow-sm position-relative">
+                        <!-- Иконка сердечка -->
+                        <div class="favorite-icon position-absolute" data-product-id="@favorite.Product.Id">
+                            <i class="fa fa-heart text-danger"></i>
+                        </div>
+                        <a href="@Url.Action("Details", "Catalog", new { id = favorite.Product.Id })">
+                            <img src="@favorite.Product.ImageUrl" class="card-img-top" alt="@favorite.Product.Name" style="max-height: 200px; object-fit: cover;">
+                        </a>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@favorite.Product.Name</h5>
+                            <p class="card-text">@favorite.Product.Price.ToString("C")</p>
+                            <button class="btn btn-primary mt-auto" onclick="addToCart(@favorite.Product.Id)">Добавить в корзину</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.favorite-icon').on('click', function() {
+                var productId = $(this).data('product-id');
+                var icon = $(this).find('i');
+                if (icon.hasClass('text-danger')) {
+                    // Удалить из избранного
+                    $.ajax({
+                        url: '@Url.Action("Remove", "Favorites")',
+                        type: 'POST',
+                        data: { productId: productId },
+                        success: function() {
+                            icon.removeClass('text-danger');
+                            toastr.info('Товар удален из избранного');
+                            location.reload(); // Перезагрузка страницы для обновления списка
+                        }
+                    });
+                } else {
+                    // Добавить в избранное
+                    $.ajax({
+                        url: '@Url.Action("Add", "Favorites")',
+                        type: 'POST',
+                        data: { productId: productId },
+                        success: function() {
+                            icon.addClass('text-danger');
+                            toastr.success('Товар добавлен в избранное');
+                        }
+                    });
+                }
+            });
+        });
+
+        function addToCart(productId) {
+            $.ajax({
+                url: '@Url.Action("AddToCart", "ShoppingCarts")',
+                type: 'POST',
+                data: { id: productId, quantity: 1 },
+                success: function(result) {
+                    if (result.success) {
+                        toastr.success('Товар добавлен в корзину');
+                        // Обновите интерфейс корзины, если необходимо
+                    }
+                }
+            });
+        }
+    </script>
+}

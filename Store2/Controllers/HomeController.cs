@@ -19,7 +19,8 @@ namespace Store2.Controllers
                 FooterSocial = db.FooterSocials.ToList(),
                 Slides = db.Slides.ToList(),
                 PropertyStoreModels = db.PropertyStoreModels.ToList(),
-                Products = db.Products.ToList() // Пример получения одного продукта
+                Products = db.Products.ToList(), // Пример получения одного продукта
+                Categories = db.Categories.ToList()
             };
 
             // Возвращение viewModel в представление

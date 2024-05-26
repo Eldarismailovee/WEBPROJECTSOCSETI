@@ -1,21 +1,42 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 
-public class AdminAreaRegistration : AreaRegistration
+namespace Store2.Areas.Admin
 {
-    public override string AreaName
+    public class AdminAreaRegistration : AreaRegistration
     {
-        get
+        public override string AreaName
         {
-            return "Admin";
+            get { return "Admin"; }
+        }
+
+        public override void RegisterArea(AreaRegistrationContext context)
+        {
+            context.MapRoute(
+                "Admin_default",
+                "Admin/{controller}/{action}/{id}",
+                new { action = "Index", id = UrlParameter.Optional },
+                new[] { "Store2.Areas.Admin.Controllers" }
+            ).RouteHandler = new AdminRouteHandler(); // Добавляем этот обработчик
         }
     }
 
-    public override void RegisterArea(AreaRegistrationContext context)
+    public class AdminRouteHandler : MvcRouteHandler
     {
-        context.MapRoute(
-            "Admin_default",
-            "Admin/{controller}/{action}/{id}",
-            new { action = "Index", id = UrlParameter.Optional }
-        );
+        protected override IHttpHandler GetHttpHandler(RequestContext requestContext)
+        {
+            var controller = requestContext.RouteData.Values["controller"].ToString();
+            if (controller.StartsWith("Admin"))
+            {
+                var user = requestContext.HttpContext.User;
+                if (!user.Identity.IsAuthenticated || !user.IsInRole("Admin"))
+                {
+                    requestContext.RouteData.Values["controller"] = "Account";
+                    requestContext.RouteData.Values["action"] = "Login";
+                }
+            }
+            return base.GetHttpHandler(requestContext);
+        }
     }
 }

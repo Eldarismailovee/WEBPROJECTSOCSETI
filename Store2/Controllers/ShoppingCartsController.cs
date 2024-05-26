@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Store2.Domain;
 using Store2.Models;
 
@@ -16,114 +17,23 @@ namespace Store2.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
+        }
+
         // GET: ShoppingCarts
         public async Task<ActionResult> Index()
         {
             var shoppingCarts = db.ShoppingCarts.Include(s => s.Product);
+            ViewBag.DeliveryMethods = db.DeliveryMethods.ToList();
             return View(await shoppingCarts.ToListAsync());
         }
 
-        // GET: ShoppingCarts/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ShoppingCart shoppingCart = await db.ShoppingCarts.FindAsync(id);
-            if (shoppingCart == null)
-            {
-                return HttpNotFound();
-            }
-            return View(shoppingCart);
-        }
-
-        // GET: ShoppingCarts/Create
-        public ActionResult Create()
-        {
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "Name");
-            return View();
-        }
-
-        // POST: ShoppingCarts/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,ProductId,Quantity")] ShoppingCart shoppingCart)
-        {
-            if (ModelState.IsValid)
-            {
-                db.ShoppingCarts.Add(shoppingCart);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "Name", shoppingCart.ProductId);
-            return View(shoppingCart);
-        }
-
-        // GET: ShoppingCarts/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ShoppingCart shoppingCart = await db.ShoppingCarts.FindAsync(id);
-            if (shoppingCart == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "Name", shoppingCart.ProductId);
-            return View(shoppingCart);
-        }
-
-        // POST: ShoppingCarts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,ProductId,Quantity")] ShoppingCart shoppingCart)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(shoppingCart).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "Name", shoppingCart.ProductId);
-            return View(shoppingCart);
-        }
-
-        // GET: ShoppingCarts/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ShoppingCart shoppingCart = await db.ShoppingCarts.FindAsync(id);
-            if (shoppingCart == null)
-            {
-                return HttpNotFound();
-            }
-            return View(shoppingCart);
-        }
-
-        // POST: ShoppingCarts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            ShoppingCart shoppingCart = await db.ShoppingCarts.FindAsync(id);
-            db.ShoppingCarts.Remove(shoppingCart);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
-        //добавление продукта в корзину AddToCart
-        public async Task<ActionResult> AddToCart(int id, int quantity)
+        public async Task<JsonResult> AddToCart(int id, int quantity)
         {
             var product = await db.Products.FindAsync(id);
             if (product != null)
@@ -141,27 +51,89 @@ namespace Store2.Controllers
                     var cart = new ShoppingCart
                     {
                         ProductId = product.Id,
-                        Quantity = quantity // Используем переданное количество
+                        Quantity = quantity,
                     };
                     db.ShoppingCarts.Add(cart);
                 }
                 await db.SaveChangesAsync();
+                return Json(new { success = true, message = "Товар добавлен в корзину." });
             }
+            return Json(new { success = false, message = "Ошибка при добавлении товара в корзину." });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> RemoveFromCart(int id)
+        {
+            var cartItem = await db.ShoppingCarts.FindAsync(id);
+            if (cartItem != null)
+            {
+                db.ShoppingCarts.Remove(cartItem);
+                await db.SaveChangesAsync();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> ClearCart()
+        {
+            var cartItems = db.ShoppingCarts.ToList();
+            db.ShoppingCarts.RemoveRange(cartItems);
+            await db.SaveChangesAsync();
             return Json(new { success = true });
         }
 
-        //checkout
-        public async Task<ActionResult> Checkout()
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult> Checkout(int deliveryMethodId)
         {
-            var deliveryMethods = db.PaymentMethods.ToList();
-            var checkoutViewModel = new CheckOutViewModel
+            var cartItems = await db.ShoppingCarts.Include(s => s.Product).ToListAsync();
+            var userId = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId);
+
+            if (cartItems.Count == 0)
             {
-                // Заполните другие свойства модели...
+                return Json(new { success = false, message = "Корзина пуста." });
+            }
+
+            var totalAmount = cartItems.Sum(c => c.Product.Price * c.Quantity);
+
+            var checkoutViewModel = new Models.CheckOutViewModel
+            {
+                CartItems = cartItems,
+                TotalPrice = totalAmount,
+                SelectedDeliveryMethodId = deliveryMethodId,
+                DeliveryMethods = db.DeliveryMethods.ToList()
             };
-            var cart = Session["Cart"] as ShoppingCart;
-            var shoppingCart = db.ShoppingCarts.Include(c => c.Product);
-            return View(await shoppingCart.ToListAsync());
+
+            return View("Payment", checkoutViewModel);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ProcessPayment(Models.CheckOutViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Логика для обработки платежа
+
+                // Очистка корзины после успешного платежа
+                var cartItems = await db.ShoppingCarts.ToListAsync();
+                db.ShoppingCarts.RemoveRange(cartItems);
+                await db.SaveChangesAsync();
+
+                return RedirectToAction("OrderConfirmed");
+            }
+
+            model.DeliveryMethods = db.DeliveryMethods.ToList();
+            return View("Payment", model);
+        }
+
+        public ActionResult OrderConfirmed()
+        {
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

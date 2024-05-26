@@ -18,6 +18,13 @@ namespace Store2
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Autocomplete",
+                url: "Catalog/Autocomplete",
+                defaults: new { controller = "Catalog", action = "Autocomplete" }
+            );
         }
     }
+
 }

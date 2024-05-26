@@ -1,0 +1,29 @@
+﻿@model Store2.Models.EditProfileViewModel
+
+@{
+    ViewBag.Title = "Редактирование профиля";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Редактирование профиля</h2>
+
+@using (Html.BeginForm("EditProfile", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(m => m.CustomerName)
+        @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Phone)
+        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+}

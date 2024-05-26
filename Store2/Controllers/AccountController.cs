@@ -53,7 +53,53 @@ namespace Store2.Controllers
             }
         }
 
-        //
+        [HttpGet]
+        public async Task<ActionResult> EditProfile()
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var model = new EditProfileViewModel
+            {
+                CustomerName = user.UserName,
+                Email = user.Email,
+                Phone = user.PhoneNumber
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditProfile(EditProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            user.UserName = model.CustomerName;
+            user.Email = model.Email;
+            user.PhoneNumber = model.Phone;
+
+            var result = await UserManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            AddErrors(result);
+            return View(model);
+        }
+
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -267,8 +313,8 @@ namespace Store2.Controllers
 
         //
         // POST: /Account/ExternalLogin
-        [HttpPost]
         [AllowAnonymous]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {

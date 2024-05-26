@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Store2.Domain;
 
 namespace Store2.Models
 {
@@ -58,8 +59,12 @@ namespace Store2.Models
 
         public DbSet<Domain.AdminLogin> AdminLogins { get; set; }
 
+        public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<DeliveryMethods> DeliveryMethods { get; set; }
+
         public System.Data.Entity.DbSet<Store2.Domain.Slides> Slides { get; set; }
 
         public System.Data.Entity.DbSet<Store2.Domain.HomeViewModel> HomeViewModels { get; set; }
+
     }
 }

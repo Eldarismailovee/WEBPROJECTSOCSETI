@@ -3,160 +3,316 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Супермаркет - Ваш онлайн магазин</title>
+    <title>@ViewBag.Title - Супермаркет</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <link rel="stylesheet" href="~/Content/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="~/Content/materialdesignicons.min.css">
+    <script>
+     $(document).ready(function () {
+         let idleTime = 0;
 
-        .wrapper {
-            min-height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
+         // Инкрементировать idleTime каждые 60 секунд
+         const idleInterval = setInterval(timerIncrement, 60000); // 1 минута
 
-        .content {
-            flex: 1;
-        }
+         // Сбросить idleTime при любой активности пользователя
+         $(this).mousemove(resetTimer);
+         $(this).keypress(resetTimer);
 
-        .navbar-brand {
-            font-size: 1.5em;
-            color: #fff;
-        }
+         function resetTimer() {
+             idleTime = 0;
+         }
 
-        .bg-green {
-            background-color: #4CAF50;
-        }
-
-        .search-bar {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-        }
-
-            .search-bar input[type="search"] {
-                border-radius: 20px;
-                padding-right: 40px;
-            }
-
-            .search-bar .fa-search {
-                position: absolute;
-                right: 10px;
-                top: 50%;
-                transform: translateY(-50%);
-                color: #aaa;
-            }
-
-        .contact-info {
-            color: #fff;
-            text-align: right;
-        }
-
-            .contact-info p {
-                margin-bottom: 0;
-            }
-
-        .footer {
-            background-color: #343a40;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-        }
-    </style>
+         function timerIncrement() {
+             idleTime += 1;
+             if (idleTime >= 30) { // 30 минут бездействия
+                 // Перенаправить на страницу выхода или выполнить другие действия
+                 window.location.href = '@Url.Action("Logout", "Account", new { area = "" })';
+             } else {
+                 // Отправить "keep-alive" запрос на сервер для продления сессии
+                 $.ajax({
+                     url: '@Url.Action("KeepAlive", "Account", new { area = "" })',
+                     method: 'GET'
+                 });
+             }
+         }
+     });
+    </script>
 </head>
 <body>
     <div class="wrapper">
-        <header class="bg-green py-2">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-3">
-                        <a class="navbar-brand" href="#">Супермаркет</a>
+        <header class="sticky">
+            <div class="tagline d-none d-lg-block">
+                <div class="container-fluid">
+                    <div class="float-left info-link">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item">
+                                <i class="mdi mdi-phone-classic mr-1"></i> +1 234 567 89 01
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">
+                                    <i class="mdi mdi-email mr-1"></i> Support@mail.com
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-md-5 d-flex justify-content-center">
-                        <div class="search-bar">
-                            <input type="search" class="form-control" placeholder="Поиск">
-                            <i class="fas fa-search"></i>
-                        </div>
+                    <div class="float-right">
+                        <ul class="list-inline social-links mb-0">
+                            <li class="list-inline-item">
+                                <a href="#">
+                                    <i class="mdi mdi-facebook"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">
+                                    <i class="mdi mdi-twitter"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">
+                                    <i class="mdi mdi-google-plus"></i>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-md-4">
-                        <div class="d-flex justify-content-end">
-                            <div class="nav-item dropdown">
-                                @if (Request.IsAuthenticated)
-                                {
-                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownAccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        @User.Identity.Name
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownAccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Мой аккаунт
-                                    </a>
-                                }
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
-                                    <a class="dropdown-item" href="#">Профиль</a>
-                                    <a class="dropdown-item" href="#">Настройки</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Выйти</a>
-                                </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <!--Navbar Start-->
+            <nav class="navbar navbar-expand-lg fixed-top navbar-custom" id="navbar">
+                <div class="container-fluid">
+                    <!-- LOGO -->
+                    <a class="logo text-uppercase" href="index.html">
+                        <img src="images/logo-light.png" alt="" class="logo-light" height="20" />
+                        <img src="images/logo-dark.png" alt="" class="logo-dark" height="20" />
+                    </a>
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Home")">Домой</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Catalog")">Магазин</a>
+                        </li>
+                    </ul>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="mdi mdi-menu"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <form class="mx-auto my-2 my-lg-0 d-inline w-30" action="@Url.Action("Search", "Catalog")" method="get">
+                            <div class="input-group rounded-pill">
+                                <input type="text" id="search-box" class="form-control rounded-pill border border-right-0" name="query" placeholder="Поиск...">
+                                <span class="input-group-append">
+                                    <button class="btn btn-outline-secondary rounded-pill border border-left-0" type="button">
+                                        <i class="mdi mdi-magnify"></i>
+                                    </button>
+                                </span>
                             </div>
-                            <a class="nav-link text-white" href="#">Избранное</a>
-                            <a class="nav-link text-white" href="#">
-                                Корзина <span class="badge badge-pill badge-light">0</span>
-                            </a>
+                        </form>
+                        <ul class="navbar-nav ml-auto navbar-center" id="mySidenav">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index", "Manage")" class="nav-link">@User.Identity.Name</a>
+                                </li>
+                            }
+
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Login", "Account")" class="nav-link">Войти</a>
+                                </li>
+                            }
+
+                            @if (Request.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index", "Favorites")">Список Избранного</a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "ShoppingCarts")" class="nav-link">Корзина</a>
+                            </li>
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                if (User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="@Url.Action("Index", "AdminPanel", new { area = "Admin" })">Админ-панель</a>
+                                    </li>
+                                }
+                            }
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Выйти</a>
+                                        </li>
+                                    </ul>
+                                }
+                            }
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+        </header>
+
+        <section class="bg-home bg-primary" id="home">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="home-content text-center mb-4">
+                            <div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!-- end row -->
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-7">
+                        <div class="home-img">
+                            <img src="images/home-img.png" alt="" class="img-fluid mx-auto d-block">
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
             </div>
-        </header>
+            <!-- end container-fluid -->
+        </section>
+
         <main role="main" class="container content">
             <!-- Основное содержимое страницы -->
             @RenderBody()
         </main>
-        <footer class="footer mt-auto py-3 bg-dark">
-            <div class="container">
+        <footer class="bg-dark footer text-white">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3">
-                        <h5>Подписывайтесь на нас</h5>
-                        <p>Подписывайтесь на наши социальные сети и узнавайте первыми о лучших предложениях!</p>
-                        <!-- Иконки социальных сетей -->
-                    </div>
-                    <div class="col-md-3">
-                        <h5>Linella</h5>
-                        <ul style="list-style-type: none; padding: 0;">
-                            <li><a href="#" class="text-white">Местные Товары</a></li>
-                            <li><a href="#" class="text-white">О нас</a></li>
-                            <li><a href="#" class="text-white">Новости</a></li>
-                            <!-- Другие ссылки -->
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <h5>Страницы</h5>
-                        <ul style="list-style-type: none; padding: 0;">
-                            <li><a href="#" class="text-white">Вакансии</a></li>
-                            <li><a href="#" class="text-white">Политика конфиденциальности</a></li>
-                            <li><a href="#" class="text-white">Условия и положения</a></li>
-                            <!-- Другие ссылки -->
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <h5>Контакты</h5>
-                        <p><a href="tel:+37322890930" class="text-white">+373 (22) 89-09-30</a></p>
-                        <p>Кишинёв, ул. Студентилор 7/1</p>
-                        <p><a href="mailto:relatiiclienti@linella.md" class="text-white">relatiiclienti@linella.md</a></p>
-                        <p><a href="tel:+37322890927" class="text-white">+373 68 82 68 28</a></p>
+                    <div class="col-lg-12">
+                        <div class="footer-cta py-4 mb-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <div class="cta-content">
+                                        <h3 class="text-white mb-2">Супермаркет</h3>
+                                        <p class="text-white-50 mo-mb-20 mb-0">Лучшие цены и предложения.</p>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-md-right">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="mb-3">
+                            <img src="images/logo-light.png" alt="" height="20">
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <h5 class="footer-title text-white mb-3">О нас</h5>
+                        <ul class="list-unstyled footer-list">
+                            <li><a href="">Home</a></li>
+                            <li><a href="">Features</a></li>
+                            <li><a href="">About Us</a></li>
+                            <li><a href="">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2">
+                        <h5 class="footer-title text-white mb-3">Соц сети</h5>
+                        <ul class="list-unstyled footer-list">
+                            <li><a href="">Facebook</a></li>
+                            <li><a href="">Twitter</a></li>
+                            <li><a href="">Instagram</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2">
+                        <h5 class="footer-title text-white mb-3">Поддержка</h5>
+                        <ul class="list-unstyled footer-list">
+                            <li><a href="">Help & Support</a></li>
+                            <li><a href="">Privacy Policy</a></li>
+                            <li><a href="">Terms & Conditions</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3">
+                        <h5 class="footer-title text-white mb-3">Контакты</h5>
+                        <div class="pt-1">
+                            <div class="float-left mr-2">
+                                <i class="pe-7s-map-marker font-20"></i>
+                            </div>
+                            <p class="text-white-50 overflow-hidden">2395 Point Street Chicago, IL 60639</p>
+                        </div>
+                        <div>
+                            <div class="float-left mr-2">
+                                <i class="pe-7s-phone font-20"></i>
+                            </div>
+                            <p class="text-white-50 overflow-hidden">(123) 456-7890</p>
+                        </div>
+                        <div>
+                            <div class="float-left mr-2">
+                                <i class="pe-7s-mail font-20"></i>
+                            </div>
+                            <p class="text-white-50 overflow-hidden">fgghyk51@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="py-4">
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
             </div>
+            <!-- container-fluid end -->
         </footer>
+        <!-- footer end -->
     </div>
-
     <!-- Скрипты -->
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/jquery.easing.min.js"></script>
+    <script src="~/Scripts/scrollspy.min.js"></script>
+    <script src="~/Scripts/counter.init.js"></script>
+    <script src="~/Scripts/app.js"></script>
+    <script>
+        $(function () {
+            $("#search-box").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: '@Url.Action("Autocomplete", "Catalog")',
+                        type: 'GET',
+                        data: { term: request.term },
+                        success: function(data) {
+                            response(data);
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    window.location.href = '@Url.Action("Details", "Catalog")/' + ui.item.value;
+                },
+                minLength: 2
+            });
+        });
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

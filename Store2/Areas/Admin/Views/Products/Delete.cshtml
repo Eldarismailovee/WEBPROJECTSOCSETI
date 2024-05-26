@@ -1,0 +1,50 @@
+﻿﻿@model Store2.Domain.Product
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Админ панель</a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Products")">Продукты</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Удаление продукта</li>
+    </ol>
+</nav>
+
+<div class="container mt-5">
+    <h2>Удаление продукта</h2>
+    <h3>Вы действительно хотите удалить данный продукт?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>Название</dt>
+            <dd>@Html.DisplayFor(model => model.Name)</dd>
+
+            <dt>Цена</dt>
+            <dd>@Html.DisplayFor(model => model.Price)</dd>
+
+            <dt>Описание</dt>
+            <dd>@Html.DisplayFor(model => model.Description)</dd>
+
+            <dt>Количество</dt>
+            <dd>@Html.DisplayFor(model => model.Quantity)</dd>
+
+            <dt>Изображение</dt>
+            <dd><img src="@Url.Content(Model.ImageUrl)" alt="Изображение продукта" class="img-thumbnail" /></dd>
+
+            <dt>Категория</dt>
+            <dd>@Html.DisplayFor(model => model.Category.Name)</dd>
+
+            <dt>Бренд</dt>
+            <dd>@Html.DisplayFor(model => model.Brand)</dd>
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input type="submit" value="Удалить" class="btn btn-danger" />
+            @Html.ActionLink("Вернуться к списку", "Index", null, new { @class = "btn btn-secondary" })
+        }
+    </div>
+</div>
