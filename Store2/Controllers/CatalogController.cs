@@ -53,8 +53,6 @@ namespace Store2.Controllers
                     products = products.OrderBy(p => p.Name);
                     break;
             }
-            ViewBag.Categories = db.Categories.ToList();
-            ViewBag.CurrentCategory = categoryId;
             return View(await products.ToListAsync());
         }
         // GET: Catalog/Details/5

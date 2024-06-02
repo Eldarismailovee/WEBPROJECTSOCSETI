@@ -5,45 +5,7 @@
     var categoryName = ViewBag.CategoryName ?? "Каталог";
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<style>
-    .favorite-icon {
-        top: 10px;
-        right: 10px;
-        font-size: 1.5em;
-        color: #ddd;
-        cursor: pointer;
-        transition: color 0.3s;
-    }
 
-        .favorite-icon .fa-heart {
-            color: #ddd;
-        }
-
-            .favorite-icon .fa-heart.text-danger {
-                color: red;
-            }
-
-    .sidebar {
-        background-color: #f8f9fa;
-        padding: 15px;
-        border-right: 1px solid #ddd;
-    }
-
-        .sidebar .nav-link {
-            color: #333;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-            .sidebar .nav-link:hover {
-                color: #0056b3;
-            }
-
-    .content-area {
-        margin-left: 250px;
-    }
-</style>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Главная</a></li>
@@ -52,171 +14,89 @@
     </ol>
 </nav>
 
-<div class="container-fluid">
+<h2 class="text-center">@ViewBag.CategoryName</h2>
+<hr class="my-4" style="border-top: 1px solid #ccc;">
+<div class="container mt-4">
     <div class="row">
-        <div class="col-md-3 sidebar">
-            <h4>Категории</h4>
-            <nav class="nav flex-column">
-                @foreach (var category in ViewBag.Categories)
-                {
-                    <a class="nav-link" href="@Url.Action("Index", "Catalog", new { categoryId = category.Id })">@category.Name</a>
-                }
-            </nav>
-        </div>
-        <div class="col-md-9 content-area">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h2 class="text-center">@ViewBag.CategoryName</h2>
-                <div class="form-inline">
-                    <label for="sortOrder" class="mr-2">Сортировать по:</label>
-                    <select id="sortOrder" class="form-control" onchange="sortProducts()">
-                        <option value="Name" @(ViewBag.CurrentSort == "Name" ? "selected" : "")>Имя (А-Я)</option>
-                        <option value="Price" @(ViewBag.CurrentSort == "Price" ? "selected" : "")>Цена (возрастание)</option>
-                        <option value="price_desc" @(ViewBag.CurrentSort == "price_desc" ? "selected" : "")>Цена (убывание)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                @foreach (var item in Model)
-                {
-                    <div class="col-md-4 col-lg-3 mb-4">
-                        <div class="card h-100 shadow position-relative">
-                            <!-- Иконка сердечка -->
-                            <div class="favorite-icon position-absolute" data-product-id="@item.Id">
-                                <i class="fa fa-heart"></i>
-                            </div>
-                            <a href="@Url.Action("Details", "Catalog", new { id = item.Id })">
-                                <img src="@Url.Content(item.ImageUrl)" class="card-img-top" alt="@item.Name">
-                            </a>
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">@item.Name</h5>
-                                <div class="mt-auto">
-                                    <small class="text-muted">@item.Price MDL</small>
-                                    <div class="input-group mt-2" style="width: 120px;">
-                                        <button class="btn btn-outline-secondary" onclick="changeQuantity('@item.Id', -1)">-</button>
-                                        <input type="text" class="form-control text-center" id="quantity-@item.Id" value="1" data-max="@item.Quantity">
-                                        <button class="btn btn-outline-secondary" onclick="changeQuantity('@item.Id', 1)">+</button>
-                                    </div>
-                                    <button onclick="addToCart('@item.Id')" class="btn btn-primary btn-block mt-2">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
+        <div class="col-md-12 mb-3 text-center">
+            <a href="@Url.Action("Index", "Catalog", new { sortOrder = ViewBag.NameSortParm, categoryId = ViewBag.CurrentCategory })" class="btn btn-outline-primary m-1">Имя (А-Я)</a>
+            <a href="@Url.Action("Index", "Catalog", new { sortOrder = "Price", categoryId = ViewBag.CurrentCategory })" class="btn btn-outline-primary m-1">Цена (возрастание)</a>
+            <a href="@Url.Action("Index", "Catalog", new { sortOrder = "price_desc", categoryId = ViewBag.CurrentCategory })" class="btn btn-outline-primary m-1">Цена (убывание)</a>
         </div>
     </div>
-</div>
 
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="card h-100 shadow">
+                    <a href="@Url.Action("Details", "Catalog", new { id = item.Id })">
+                        <img src="@Url.Content(item.ImageUrl)" class="card-img-top" alt="@item.Name">
+                    </a>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Description</p>
+                        <div class="mt-auto">
+                            <small class="text-muted">@item.Price MDL</small>
+                            <div class="input-group mt-2">
+                                <button class="btn btn-outline-secondary" onclick="changeQuantity('@item.Id', -1)">-</button>
+                                <input type="text" class="form-control" id="quantity-@item.Id" value="1">
+                                <button class="btn btn-outline-secondary" onclick="changeQuantity('@item.Id', 1)">+</button>
+                            </div>
+                            <button onclick="addToCart('@item.Id')" class="btn btn-primary btn-block mt-2">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
-    function changeQuantity(productId, delta) {
-        var quantityInput = document.getElementById('quantity-' + productId);
-        var maxQuantity = parseInt(quantityInput.getAttribute('data-max'));
-        var currentQuantity = parseInt(quantityInput.value);
-        var newQuantity = currentQuantity + delta;
-        if (newQuantity > 0 && newQuantity <= maxQuantity) {
-            quantityInput.value = newQuantity;
-        } else if (newQuantity > maxQuantity) {
-            quantityInput.value = maxQuantity;
-            toastr.warning('Максимальное доступное количество товара: ' + maxQuantity);
+    let quantity = 1;
+    function increaseQuantity() {
+        quantity++;
+        document.getElementById("quantityInput").value = quantity;
+    }
+    function decreaseQuantity() {
+        if (quantity > 1) {
+            quantity--;
+            document.getElementById("quantityInput").value = quantity;
         }
     }
-
     function addToCart(productId) {
         var quantityInput = document.getElementById('quantity-' + productId);
         var quantity = parseInt(quantityInput.value);
-        var maxQuantity = parseInt(quantityInput.getAttribute('data-max'));
-        if (quantity > maxQuantity) {
-            quantity = maxQuantity;
-            quantityInput.value = maxQuantity;
-            toastr.warning('Максимальное доступное количество товара: ' + maxQuantity);
-        }
         $.ajax({
             url: '@Url.Action("AddToCart", "ShoppingCarts")',
             type: 'POST',
             data: { id: productId, quantity: quantity },
             success: function(result) {
                 if (result.success) {
-                    toastr.success(result.message);
-                } else {
-                    toastr.error(result.message);
+                    toastr.success('Товар добавлен в корзину');
+                    // Обновите интерфейс корзины, если необходимо
                 }
-            },
-            error: function(xhr, status, error) {
-                toastr.error('Ошибка при добавлении товара в корзину: ' + error);
             }
         });
     }
-
-    function sortProducts() {
-        var sortOrder = document.getElementById("sortOrder").value;
-        window.location.href = '@Url.Action("Index", "Catalog")' + "?sortOrder=" + sortOrder + "&categoryId=@ViewBag.CurrentCategory";
+    // Sort by name (ascending)
+    function sortByNameAsc() {
+        location.href = '@Url.Action("Index", "Catalog")?sort=name_asc';
     }
 
-    $(document).ready(function() {
-        $.ajax({
-            url: '@Url.Action("GetUserFavorites", "Favorites")',
-            type: 'GET',
-            success: function(favoriteProductIds) {
-                favoriteProductIds.forEach(function(productId) {
-                    var icon = $('.favorite-icon[data-product-id="' + productId + '"]').find('i');
-                    icon.addClass('text-danger');
-                });
-            },
-            error: function(xhr, status, error) {
-                toastr.error('Ошибка при загрузке списка избранного: ' + error);
-            }
-        });
+    // Sort by name (descending)
+    function sortByNameDesc() {
+        location.href = '@Url.Action("Index", "Catalog")?sort=name_desc';
+    }
 
-        $('.favorite-icon').on('click', function() {
-            var productId = $(this).data('product-id');
-            var icon = $(this).find('i');
-            if (icon.hasClass('text-danger')) {
-                $.ajax({
-                    url: '@Url.Action("Remove", "Favorites")',
-                    type: 'POST',
-                    data: { productId: productId },
-                    success: function() {
-                        icon.removeClass('text-danger');
-                        toastr.info('Товар удален из избранного');
-                    },
-                    error: function(xhr, status, error) {
-                        toastr.error('Ошибка при удалении товара из избранного: ' + error);
-                    }
-                });
-            } else {
-                $.ajax({
-                    url: '@Url.Action("Add", "Favorites")',
-                    type: 'POST',
-                    data: { productId: productId },
-                    success: function() {
-                        icon.addClass('text-danger');
-                        toastr.success('Товар добавлен в избранное');
-                    },
-                    error: function(xhr, status, error) {
-                        toastr.error('Ошибка при добавлении товара в избранное: ' + error);
-                    }
-                });
-            }
-        });
+    // Sort by price (ascending)
+    function sortByPriceAsc() {
+        location.href = '@Url.Action("Index", "Catalog")?sort=price_asc';
+    }
 
-        $('input[id^="quantity-"]').on('input', function() {
-            var maxQuantity = parseInt($(this).data('max'));
-            var value = $(this).val();
-
-            // Удаляем все нецифровые символы
-            if (!/^\d+$/.test(value)) {
-                value = value.replace(/\D/g, '');
-                $(this).val(value);
-            }
-
-            // Проверяем максимальное значение
-            if (parseInt(value) > maxQuantity) {
-                $(this).val(maxQuantity);
-                toastr.warning('Максимальное доступное количество товара: ' + maxQuantity);
-            }
-        });
-    });
+    // Sort by price (descending)
+    function sortByPriceDesc() {
+        location.href = '@Url.Action("Index", "Catalog")?sort=price_desc';
+    }
 </script>

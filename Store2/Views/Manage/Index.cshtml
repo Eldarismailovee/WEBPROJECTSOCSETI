@@ -5,45 +5,36 @@
 }
 
 <main aria-labelledby="title">
-    <div class="container mt-5">
+
+    <p class="text-success">@ViewBag.StatusMessage</p>
+    <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <div class="card shadow-sm">
+                <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Account Settings</h4>
-                        <p class="text-success">@ViewBag.StatusMessage</p>
+                        <h4 class="card-title">Change your account settings</h4>
                         <hr />
-                        <div class="mb-4">
-                            <h5>Personal Information</h5>
-                            <p><strong>Customer Name:</strong> @Model.CustomerName</p>
-                            <p><strong>Role:</strong> @Model.Role</p>
-                        </div>
-                        <div class="mb-4">
-                            <h5>Password</h5>
-                            <p>
+                        <dl class="dl-horizontal">
+                            <dt>Password:</dt>
+                            <dd>
+                                [
                                 @if (Model.HasPassword)
                                 {
-                                    @Html.ActionLink("Change your password", "ChangePassword", null, new { @class = "btn btn-primary" })
+                                    @Html.ActionLink("Change your password", "ChangePassword")
                                 }
                                 else
                                 {
-                                    @Html.ActionLink("Create a password", "SetPassword", null, new { @class = "btn btn-primary" })
+                                    @Html.ActionLink("Create", "SetPassword")
                                 }
-                            </p>
-                        </div>
-                        <div class="mb-4">
-                            <h5>External Logins</h5>
-                            <p>@Model.Logins.Count linked accounts</p>
-                            <p>
-                                @Html.ActionLink("Manage external logins", "ManageLogins", null, new { @class = "btn btn-secondary" })
-                            </p>
-                        </div>
-                        <div class="mb-4">
-                            <h5>Profile Information</h5>
-                            <p>
-                                @Html.ActionLink("Edit Profile", "EditProfile", "Account", new { }, new { @class = "btn btn-info" })
-                            </p>
-                        </div>
+                                ]
+                            </dd>
+                            <dt>External Logins:</dt>
+                            <dd>
+                                @Model.Logins.Count [
+                                @Html.ActionLink("Manage", "ManageLogins") ]
+                            </dd>
+                            <!-- Other account settings here -->
+                        </dl>
                     </div>
                 </div>
             </div>

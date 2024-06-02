@@ -19,5 +19,6 @@ namespace Store2.Areas.Admin.Controllers
         {
             return View();
         }
+
     }
 }

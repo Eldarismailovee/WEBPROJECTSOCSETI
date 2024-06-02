@@ -125,24 +125,18 @@
                                 </li>
                             }
 
-                            @if (Request.IsAuthenticated)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" href="@Url.Action("Index", "Favorites")">Список Избранного</a>
-                                </li>
-                            }
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "ShoppingCarts")" class="nav-link">Корзина</a>
+                            </li>
                             <li class="nav-item">
                                 <a href="@Url.Action("Index", "ShoppingCarts")" class="nav-link">Корзина</a>
                             </li>
 
-                            @if (User.Identity.IsAuthenticated)
+                            @if (User.IsInRole("Admin"))
                             {
-                                if (User.IsInRole("Admin"))
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="@Url.Action("Index", "AdminPanel", new { area = "Admin" })">Админ-панель</a>
-                                    </li>
-                                }
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index", "Admin")" class="nav-link">Админ панель</a>
+                                </li>
                             }
                             @if (User.Identity.IsAuthenticated)
                             {

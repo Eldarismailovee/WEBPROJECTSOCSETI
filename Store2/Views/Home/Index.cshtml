@@ -48,9 +48,9 @@
             @foreach (var category in Model.Categories)
             {
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100 shadow-sm">
+                    <div class="card">
                         <a href="@Url.Action("Index", "Catalog", new { categoryId = category.Id })">
-                            <img src="@category.Description" class="card-img-top" alt="@category.Name" style="max-height: 250px; object-fit: cover;">
+                            <img src="@category.Description" class="card-img-top" alt="@category.Name">
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">@category.Name</h5>
@@ -60,6 +60,8 @@
             }
         </div>
     </div>
+
+
 
     <h2 class="text-center my-4">Недавно добавленные</h2>
     <hr class="my-4" style="border-top: 1px solid #ccc;">
@@ -85,9 +87,11 @@
 
     <h2 class="text-center my-4">Акции</h2>
     <hr class="my-4" style="border-top: 1px solid #ccc;">
-</div>
+    <div class="row"></div>
 
-@section Scripts {
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
-}
+    </div>
+
+    @section Scripts {
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    }
