@@ -50,8 +50,8 @@ namespace Store2
             // Uncomment these lines to enable logging in with third party login providers
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "1086012116978-hg7o5au8lqgbu9u16olctksc8k4m7cpl.apps.googleusercontent.com",
-                ClientSecret = "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"
+                ClientId = "clientid ",
+                ClientSecret = "clientsecret"
             });
 
             app.UseFacebookAuthentication(new FacebookAuthenticationOptions()
